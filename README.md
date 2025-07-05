@@ -6,23 +6,43 @@ Date: 2025-07-05
 
 import numpy as np import matplotlib.pyplot as plt import pandas as pd
 
-Euler-Mascheroni constant
+Constants
 
-gamma = 0.5772
+GAMMA = 0.5772  # Euler–Mascheroni constant F = np.pi       # Spectral normalization factor
 
-Spectral normalization constant
+============================
 
-f = np.pi
+Alaa's Spectral Filtering Equation
 
-Φ′ Filtering Equation (Core Equation for Nuron Existence)
+============================
 
-def phi_prime(A, theta): """ Alaa's Spectral Filtering Equation: Φ′(A, θ) = [2π - sin(θ) - γ·ln(A)] / π
 
-Determines if a Nuron (logical wave entity) can manifest.
-"""
-return (2 * np.pi - np.sin(theta) - gamma * np.log(A)) / f
 
-Generate multiple Nurons from binary logical waveforms
+Φ′(A, θ) = [ 2π − sin(θ) − γ · ln(A) ] / π
+
+
+
+Where:
+
+- A     = Decimal value of the binary Nuron code (A > 1)
+
+- θ     = Perceptual angle of the Nuron = (1s / total_bits) · π
+
+- γ     = Euler-Mascheroni constant (≈ 0.5772)
+
+- π     = Pi constant (≈ 3.1415)
+
+
+
+If Φ′ > 0 → Nuron is Observed (logical manifestation)
+
+If Φ′ ≤ 0 → Nuron is Filtered (rejected)
+
+Φ′ filtering function
+
+def phi_prime(A, theta): return (2 * np.pi - np.sin(theta) - GAMMA * np.log(A)) / F
+
+Generate multiple Nurons from binary logic codes
 
 def generate_nurons(n=1000, length=16): data = [] for _ in range(n): binary = ''.join(np.random.choice(['0', '1'], size=length)) ones = binary.count('1') theta = (ones / length) * np.pi A = int(binary, 2) if int(binary, 2) > 1 else 2  # A must be > 1 to avoid log(0) phi = phi_prime(A, theta) status = "Observed" if phi > 0 else "Filtered" data.append((binary, A, theta, phi, status)) return pd.DataFrame(data, columns=["Binary", "A", "Theta", "Φ′", "Status"])
 
