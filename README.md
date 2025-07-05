@@ -34,31 +34,27 @@
   </style>
 </head>
 <body>
-  <h1>Spectral Logic Resonance Equation</h1>
+  <h1>Spectral Logic Resonance Equation (With SAT Filter)</h1>
   <div class="meta">
     Developed by: <strong>Alaa Sheikh Albasatneh</strong><br />
     Nationality: Syrian<br />
     Date: 5 July 2025
   </div>  <p>
-    This model represents a specialized formulation to analyze logical SAT states through wave-based spectral projection, separated from the Critical Phase Equation. Below is the core expression used:
+    This model represents a filtered spectral formulation to analyze logical SAT states through wave-based projection. It extends the original SLR equation by including a logical SAT filter:
   </p>  <div class="equation">
     $$
-    s = x(r, \theta) + i \cdot y(r, \theta)
-    $$where:
-$$
-x(r, \theta) = \frac{1}{2} + r \cdot \cos(\theta) \cdot (t_k - \text{Im}(s_k^0))
-$$
-$$
-y(r, \theta) = \text{Im}(s_k^0) + r \cdot \sin(\theta) \cdot (t_k - \text{Im}(s_k^0))
-$$
-$$
-s_k^0 = \frac{1}{2} + i \cdot \left(\frac{2\pi - \sin(\beta t_k) - \gamma \ln A + G(t_k)}{f}\right)
-$$
-$$
-G(t) = \frac{t}{2} \ln\left(\frac{t}{2\pi}\right) - \frac{t}{2} - \frac{\pi}{8}
-$$
-
+    \Phi'(A, \theta, x) = \left( \frac{2\pi - \sin(\theta) - \gamma \cdot \ln(A)}{f} \right) \cdot \mathbf{1}_{\text{SAT}(x)}
+    $$
   </div>  <p>
-    The purpose of this equation is to simulate the phase behavior and internal logic structure of digital systems as resonance patterns in the spectral domain.
+    Where:
+    <ul>
+      <li><strong>A</strong>: Represents the numerical identity of a logical state.</li>
+      <li><strong>\theta</strong>: Logical angle derived from the internal SAT structure.</li>
+      <li><strong>\gamma</strong>: Spectral coupling coefficient.</li>
+      <li><strong>f</strong>: Frequency of the logic spectrum.</li>
+      <li><strong>\mathbf{1}_{\text{SAT}(x)}</strong>: Logical gate function that outputs 1 only for valid SAT configurations.</li>
+    </ul>
+  </p>  <p>
+    Only configurations that are valid under SAT logic are projected through the spectral filter. All others are suppressed regardless of wave alignment.
   </p></body>
 </html>
