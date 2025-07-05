@@ -1,60 +1,38 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spectral Logic Resonance Equation – Scientific Presentation</title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
-      background-color: #f8f8f8;
-      color: #222;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2em;
-      margin-bottom: 0.5em;
-    }
-    .meta {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #555;
-    }
-    .equation {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin: 1rem 0;
-    }
-  </style>
-</head>
-<body>
-  <h1>Spectral Logic Resonance Equation (With SAT Filter)</h1>
-  <div class="meta">
-    Developed by: <strong>Alaa Sheikh Albasatneh</strong><br />
-    Nationality: Syrian<br />
-    Date: 5 July 2025
-  </div>  <p>
-    This model represents a filtered spectral formulation to analyze logical SAT states through wave-based projection. It extends the original SLR equation by including a logical SAT filter:
-  </p>  <div class="equation">
-    $$
-    \Phi'(A, \theta, x) = \left( \frac{2\pi - \sin(\theta) - \gamma \cdot \ln(A)}{f} \right) \cdot \mathbf{1}_{\text{SAT}(x)}
-    $$
-  </div>  <p>
-    Where:
-    <ul>
-      <li><strong>A</strong>: Represents the numerical identity of a logical state.</li>
-      <li><strong>\theta</strong>: Logical angle derived from the internal SAT structure.</li>
-      <li><strong>\gamma</strong>: Spectral coupling coefficient.</li>
-      <li><strong>f</strong>: Frequency of the logic spectrum.</li>
-      <li><strong>\mathbf{1}_{\text{SAT}(x)}</strong>: Logical gate function that outputs 1 only for valid SAT configurations.</li>
-    </ul>
-  </p>  <p>
-    Only configurations that are valid under SAT logic are projected through the spectral filter. All others are suppressed regardless of wave alignment.
-  </p></body>
-</html>
+Nuron Spectral Filtering System
+
+Created by: Alaa Sheikh Albasatneh (Syrian National)
+
+Date: 2025-07-05
+
+import numpy as np import matplotlib.pyplot as plt import pandas as pd
+
+Euler-Mascheroni constant
+
+gamma = 0.5772
+
+Spectral normalization constant
+
+f = np.pi
+
+Φ′ Filtering Equation (Core Equation for Nuron Existence)
+
+def phi_prime(A, theta): """ Alaa's Spectral Filtering Equation: Φ′(A, θ) = [2π - sin(θ) - γ·ln(A)] / π
+
+Determines if a Nuron (logical wave entity) can manifest.
+"""
+return (2 * np.pi - np.sin(theta) - gamma * np.log(A)) / f
+
+Generate multiple Nurons from binary logical waveforms
+
+def generate_nurons(n=1000, length=16): data = [] for _ in range(n): binary = ''.join(np.random.choice(['0', '1'], size=length)) ones = binary.count('1') theta = (ones / length) * np.pi A = int(binary, 2) if int(binary, 2) > 1 else 2  # A must be > 1 to avoid log(0) phi = phi_prime(A, theta) status = "Observed" if phi > 0 else "Filtered" data.append((binary, A, theta, phi, status)) return pd.DataFrame(data, columns=["Binary", "A", "Theta", "Φ′", "Status"])
+
+Generate Nurons and display
+
+nurons_df = generate_nurons(n=1000, length=16)
+
+Optional Plotting for Visualization
+
+plt.figure(figsize=(10, 6)) plt.hist(nurons_df["Φ′"], bins=50, color="skyblue", edgecolor="black") plt.title("Distribution of Φ′ Values for Nurons") plt.xlabel("Φ′") plt.ylabel("Frequency") plt.grid(True) plt.show()
+
+import ace_tools as tools; tools.display_dataframe_to_user(name="Nuron States", dataframe=nurons_df)
+
