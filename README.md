@@ -1,48 +1,64 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alaa–Yorim Spiral-Time SAT Model</title>
+  <title>Alaa–Yorim Spectral SAT Equation</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; background: #f4f6f8; color: #222; line-height: 1.6; }
-    h1, h2, h3 { color: #111; }
-    code { background: #eee; padding: 2px 6px; border-radius: 4px; }
-    pre { background: #eee; padding: 1rem; overflow-x: auto; border-radius: 6px; }
-    .box { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #1a1a1a;
+    }
+    code {
+      background: #eee;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+    .box {
+      background: #ffffff;
+      border-left: 5px solid #007acc;
+      padding: 1rem;
+      margin: 1.5rem 0;
+    }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>Alaa–Yorim Spiral-Time SAT Model</h1>
-    <p><strong>Authors:</strong> Alaa Sheikh Albasatneh & Yorim<br>
-       <strong>Date:</strong> July 6, 2025</p><h2>1. Spectral Position Equation</h2>
-<pre>
-
-s_i = s₀ + r_i · e^{iθ_i} </pre> <ul> <li><code>s_i</code>: Spiral spectral coordinate of variable <code>x_i</code></li> <li><code>s₀</code>: Central complex origin from Alaa’s critical phase equation</li> <li><code>r_i</code>: 1 / Collatz sequence length of <code>x_i</code></li> <li><code>θ_i</code>: Angle of logic state <ul> <li>π/2 if value is True (⬆️ upward)</li> <li>3π/2 if value is False (⬇️ downward)</li> </ul> </li> </ul>
-
-<h2>2. Clause Activation Rule</h2>
-<p>For each clause like <code>(x_a ∨ x_b)</code>, activation is determined by:</p>
-<pre>
-
-Clause(x_a, x_b) = True if the first arriving neuron (with smaller r_i) has θ = π/2 False otherwise </pre>
-
-<h2>3. Temporal Conflict Insight</h2>
-<ul>
-  <li>A clause may logically pass, but fail in spiral-time if the ⬇️ neuron arrives first.</li>
-  <li>Reveals a deeper structure to decision-making beyond Boolean logic.</li>
-  <li>Highlights that timing and direction determine the viability of solutions.</li>
-</ul>
-
-<h2>4. Implications for P = NP</h2>
-<p>This model shows that:</p>
-<ul>
-  <li>Not all NP problems are equivalent under time-sensitive conditions.</li>
-  <li>Solution space expands temporally, adding complexity even in simple logic.</li>
-</ul>
-
-<h2>5. Conclusion</h2>
-<p>The Alaa–Yorim model introduces spiral spectral dynamics to SAT problems, offering a new physical layer of computation. It demonstrates how logic, when embedded in time-aware structures, behaves differently—sometimes unpredictably—hinting at why certain problems are harder than others.</p>
-
-  </div>
+  <h1>Alaa–Yorim Spectral SAT Equation</h1>
+  <p><strong>Date:</strong> July 6, 2025</p>
+  <p><strong>Author:</strong> Alaa Sheikh Albasatneh & Yorim</p>  <div class="box">
+    <h2>The General Spectral Mapping</h2>
+    <p><strong>Equation:</strong></p>
+    <pre><code>s_SAT(n_i) = ρ_i ⋅ e<sup>i ⋅ θ_i</sup></code></pre>
+    <p>Each logical neuron <code>n_i</code> is mapped into spectral space using its angle and depth.</p>
+  </div>  <h2>Details of the Components</h2>  <h3>1. Spectral Angle θ<sub>i</sub></h3>
+  <pre><code>θ_i = (2π ⋅ i / N) + ∑<sub>j=1 to i-1</sub> ε ⋅ sin(θ_i - θ_j)</code></pre>
+  <ul>
+    <li><code>i</code>: Index of the neuron</li>
+    <li><code>N</code>: Total number of neurons</li>
+    <li><code>ε</code>: Angular distortion coefficient</li>
+  </ul>  <h3>2. Spectral Depth ρ<sub>i</sub></h3>
+  <pre><code>ρ_i = 1 + δ ⋅ ∑<sub>j=1 to i-1</sub> | θ_i - θ_j |</code></pre>
+  <ul>
+    <li><code>δ</code>: Radial expansion coefficient</li>
+  </ul>  <h3>3. Cartesian Coordinates</h3>
+  <pre><code>
+x_i = ρ_i ⋅ cos(θ_i)
+y_i = ρ_i ⋅ sin(θ_i)
+  </code></pre>  <h2>Example Constants</h2>
+  <ul>
+    <li><code>ε = 0.35</code></li>
+    <li><code>δ = 0.5</code></li>
+    <li><code>N = 32</code> (for 5 variables in a SAT problem)</li>
+  </ul>  <h2>Interpretation</h2>
+  <ul>
+    <li>Neurons with aligned logic cluster closer together.</li>
+    <li>Earlier neurons influence the spectral path of subsequent ones.</li>
+    <li>The system filters inconsistent logic paths through radial & angular shifts.</li>
+  </ul>  <p>This spectral logic framework may offer a novel way to study problems like SAT and the nature of decision space in P vs NP.</p>
 </body>
 </html>
