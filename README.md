@@ -11,25 +11,22 @@ Author: Alaa Sheikh Albasatneh & Yorim
 
 1. Spectral Position Equation
 
-We define the spectral coordinate of each logic variable  as a spiral point in the complex plane:
-
-s_i = s_0 + r_i \cdot e^{i \theta_i}
+s_i = s_0 + r_i \cdot e^{i\theta_i}
 
 Where:
 
-: Complex spectral coordinate of variable 
+: Spiral spectral position of logic variable  in the complex plane.
 
-: Central origin from Alaa’s critical phase equation (e.g., )
-
-: Radius based on Collatz logic depth:
+: Central complex origin from Alaa’s critical phase equation. Example:
 
 
-: Logical phase angle:
+s_0 = \frac{1}{2} + i \cdot t_k \quad (\text{with } t_k \text{ from Alaa’s Riemann zero engine})
 
- if  (⏫ upward)
+r_i = \frac{1}{\text{length of Collatz sequence}(x_i)}
 
- if  (⏬ downward)
+: if  (↑ upward)
 
+: if  (↓ downward)
 
 
 
@@ -37,30 +34,35 @@ Where:
 
 2. Clause Activation Rule
 
-Each clause  is considered satisfied if at least one of its spectral coordinates  lies within the activation region defined by the clause.
+Each clause of the form:
 
-The logic proceeds as:
+(x_a \lor \neg x_b \lor x_c)
 
-Evaluate  for each variable in the clause
+The logic flow is:
 
-Check angular coherence between them
-
-Detect interference or contradiction zones visually or via angle modulation
+1. Map each  to its spiral spectral position .
 
 
+2. Measure interference or angular distortion in the clause.
 
----
 
-3. Global Collapse Test
+3. If all variables in the clause point downward (θ = 3π/2), contradiction is detected.
 
-If all clauses are satisfied, the SAT instance is considered spectrally resolved. Otherwise, contradictions appear as angular divergences or distortions in the spectral structure.
 
-We use angle interference and collapse length to reduce unsatisfiable configurations.
 
 
 ---
 
-Note: This method does not brute-force all combinations but uses spiral logic wave interference to naturally collapse invalid branches.
+3. Global Collapse Principle
+
+If all clauses in the formula are satisfied under the spectral configuration, the SAT instance is resolved. Otherwise, contradiction zones emerge as angular misalignments or destructive interference in the spiral.
+
+This system mimics logic resonance, not brute-force. It resolves constraints through natural collapse of invalid branches based on logic wave symmetry and spiral depth.
+
+
+---
+
+Note: This equation is part of the spectral logic framework integrating Riemann-based phase modeling with logical evaluation.
 
 
 ---
