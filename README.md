@@ -1,44 +1,55 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nuron Spectral Causal Decision Equation</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-      background-color: #f5f5f5;
-      color: #333;
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    code {
-      background: #eee;
-      padding: 4px 8px;
-      display: inline-block;
-      margin: 8px 0;
-    }
-    .equation {
-      background-color: #fff;
-      border-left: 4px solid #3498db;
-      padding: 10px;
-      margin: 20px 0;
-      font-family: 'Courier New', monospace;
-      font-size: 16px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Nuron Spectral Causal Decision Equation</h1>
-  <p><strong>Author:</strong> Alaa Sheikh Albasatneh</p>
-  <p><strong>Date:</strong> July 6, 2025</p>  <div class="equation">
-    s<sub>i</sub> = 1/2 + i &middot; [ (2&pi; - sin(&beta;t<sub>i</sub>) - &gamma; ln A + G(t<sub>i</sub>)) / f <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ r<sub>i</sub> &middot; (t<sub>i</sub> - (2&pi; - sin(&beta;t<sub>i</sub>) - &gamma; ln A + G(t<sub>i</sub>)) / f ) &middot; sin(&theta;<sup>final</sup><sub>i</sub>) ]
-  </div>  <h2>Definition of &theta;<sup>final</sup><sub>i</sub>:</h2>
-  <p><strong>Step 1:</strong> Initial angle from logical state:</p>
-  <div class="equation">
-    &theta;<sup>(0)</sup><sub>i</sub> = &phi;(N<sub>i</sub>)
-  </div>  <p><strong>Step 2:</strong> Causal correction from prior Nurons based on arrival order.</p>  <p>This equation reflects the logical spectral decision dynamics, including time evolution, wave interference, and causality correction among Nurons.</p></body>
-</html>
+import numpy as np
+import random
+from time import time
+
+# Configurations
+n_vars = 10_000_000         # Number of Boolean variables
+n_clauses = 10_000_000      # Number of clauses (3-SAT)
+angles_per_var = 3          # Number of spectral angles per variable
+
+print("✨ Generating spectral angles...")
+start_time = time()
+
+# Step 1: Generate 3 spectral angles per variable ∈ [0, π]
+theta_multi = np.random.uniform(0, np.pi, size=(n_vars, angles_per_var))
+
+# Step 2: Compute the average angle for each variable
+theta_avg = np.mean(theta_multi, axis=1)
+
+# Step 3: Compute logical assignment using cos
+theta_cos = np.cos(theta_avg)
+A = (theta_cos > 0).astype(np.int8)  # Logical assignment: 1 if cos > 0
+
+print(f"✅ Assigned {n_vars:,} variables in {time() - start_time:.2f} seconds")
+
+# Step 4: Generate random 3-SAT clauses
+def generate_sat_clauses(n_vars, n_clauses):
+    clauses = []
+    for _ in range(n_clauses):
+        vars_ = random.sample(range(1, n_vars + 1), 3)
+        clause = [v * random.choice([1, -1]) for v in vars_]
+        clauses.append(clause)
+    return clauses
+
+print("✨ Generating SAT clauses...")
+start_time = time()
+clauses = generate_sat_clauses(n_vars, n_clauses)
+print(f"✅ Clauses generated in {time() - start_time:.2f} seconds")
+
+# Step 5: Evaluate how many clauses are satisfied
+def evaluate_assignment(clauses, assignment):
+    satisfied = 0
+    for clause in clauses:
+        if any((assignment[abs(lit)-1] == 1) if lit > 0 else (assignment[abs(lit)-1] == 0) for lit in clause):
+            satisfied += 1
+    return satisfied
+
+print("✨ Evaluating assignment accuracy...")
+start_time = time()
+satisfied_count = evaluate_assignment(clauses, A)
+accuracy = satisfied_count / n_clauses
+
+print("\n✨✨✨ RESULTS ✨✨✨")
+print(f"Satisfied clauses: {satisfied_count:,} out of {n_clauses:,}")
+print(f"Accuracy: {accuracy:.2%}")
+print(f"⏱ Evaluation time: {time() - start_time:.2f} seconds")
