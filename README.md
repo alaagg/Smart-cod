@@ -1,90 +1,77 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>معادلة Albasatneh لاستخراج جذور دالة زيتا</title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Albasatneh Equation</title>
   <style>
     body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Arial', sans-serif;
+      background-color: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
       padding: 30px;
-      line-height: 1.8;
     }
-    h1, h2 {
-      color: #00ffff;
+    h1 {
+      color: cyan;
+      font-size: 28px;
+    }
+    h2 {
+      color: cyan;
+      margin-top: 40px;
     }
     .equation {
-      color: #ffcc00;
+      color: gold;
       font-size: 20px;
-      margin: 30px 0;
+      margin: 20px 0;
     }
-    .section {
-      margin-top: 40px;
+    .constants, .algo {
+      text-align: left;
+      max-width: 800px;
+      margin: auto;
+    }
+    code {
+      background-color: #222;
+      padding: 10px;
+      display: block;
+      margin: 10px 0;
+      white-space: pre-wrap;
+      color: #0f0;
     }
   </style>
 </head>
 <body>
-
-  <h1>معادلة Albasatneh لاستخراج الجذور غير البديهية لدالة زيتا</h1>
-
-  <div class="section">
-    <p><strong>الاسم:</strong> Alaa Sheikh Albasatneh</p>
-    <p><strong>الجنسية:</strong> سوري</p>
-    <p><strong>التاريخ:</strong> 10 يوليو 2025</p>
-  </div>
-
-  <div class="section">
-    <h2>المعادلة الرسمية:</h2>
-    <div class="equation">
-      \[
-      t_k = \frac{2\theta k + C_0 + \sum_{n=0}^{8} \beta_n \left( \frac{\ln k}{\ln \ln k} \right)^n}{f}
-      \]
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>الثوابت المعتمدة:</h2>
+  <h1>Albasatneh Equation for Extracting the Nontrivial Zeros of Riemann Zeta Function</h1>
+  <p><strong>Name:</strong> Alaa Sheikh Albasatneh</p>
+  <p><strong>Nationality:</strong> Syrian</p>
+  <p><strong>Date:</strong> July 10, 2025</p>  <h2>Official Equation:</h2>
+  <div class="equation">
+    t<sub>k</sub> = (2&theta;k + C<sub>0</sub> + &sum;<sub>n=0</sub><sup>8</sup> &beta;<sub>n</sub> (ln k / ln ln k)<sup>n</sup>) / f
+  </div>  <h2>Fixed Constants:</h2>
+  <div class="constants">
     <ul>
-      <li>\( f = 1 \)</li>
-      <li>\( C_0 = -6.180555 \)</li>
-      <li>\( c = 0.844327 \) (سعة الجيبية)</li>
-      <li>كثيرة الحدود التصحيحية \( \beta_n \) حتى الدرجة 8:</li>
-      <ul>
-        <li>\( \beta_0 = 0.774963 \)</li>
-        <li>\( \beta_1 = -0.225223 \)</li>
-        <li>\( \beta_2 = 0.053304 \)</li>
-        <li>\( \beta_3 = -0.010113 \)</li>
-        <li>\( \beta_4 = 0.001562 \)</li>
-        <li>\( \beta_5 = -0.000200 \)</li>
-        <li>\( \beta_6 = 0.000020 \)</li>
-        <li>\( \beta_7 = -0.000002 \)</li>
-        <li>\( \beta_8 = 0.0000001 \)</li>
-      </ul>
+      <li>f = 1</li>
+      <li>C<sub>0</sub> = -6.180555</li>
+      <li>c (sinusoidal amplitude) = 0.844327</li>
+      <li>&beta;<sub>n</sub> coefficients up to degree 8:</li>
     </ul>
-  </div>
+    <code>
+      [0.774963, -0.225223, 0.053304, -0.010113,
+       0.001562, -0.000200, 0.000020, -0.000002, 0.0000001]
+    </code>
+  </div>  <h2>Spectral Zero Generator Algorithm:</h2>
+  <div class="algo">
+    <code>
+import mathdef albasatneh_root(k): f = 1.0 C0 = -6.180555 beta = [ 0.774963, -0.225223, 0.053304, -0.010113, 0.001562, -0.000200, 0.000020, -0.000002, 0.0000001 ] theta = 1.0  # 2θ already embedded
 
-  <div class="section">
-    <h2>شرح المعادلة:</h2>
-    <p>
-      هذه المعادلة تقدم حلاً مباشرًا لاستخراج الجذر غير البديهي رقم \( k \) لدالة زيتا في المستوى المركب.
-    </p>
-    <p>
-      تمثل \( \theta \) الزاوية الطيفية الموحدة، وتدخل \( k \) ضمن بنية الجذر من خلال معامل زاوي \( 2\theta k \).
-    </p>
-    <p>
-      الحد \( C_0 \) هو إزاحة ثابتة تضمن التمركز الصحيح للأصفار في الحقل الطيفي.
-    </p>
-    <p>
-      كثيرة الحدود \( \beta_n \left( \frac{\ln k}{\ln \ln k} \right)^n \) تمثل التصحيح الديناميكي اللازم لتعديل الدقة مع تزايد \( k \).
-    </p>
-    <p>
-      كل هذه العناصر مقسومة على التردد الطيفي الموحد \( f = 1 \) لضمان ثبات النطاق.
-    </p>
-  </div>
+ln_k = math.log(k)
+lnln_k = math.log(ln_k)
+x = ln_k / lnln_k
 
+R = sum(beta[n] * x**n for n in range(9))
+tk = (2 * theta * k + C0 + R) / f
+return tk
+</code>
+
+  </div>
 </body>
 </html>
