@@ -1,62 +1,113 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Albasatneh Equation</title>
+  <title>معادلة Albasatneh لاستخراج جذور دالة زيتا</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     body {
-      background-color: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 20px;
+      background-color: #000;
+      color: #fff;
+      font-family: 'Arial', sans-serif;
+      padding: 30px;
+      line-height: 1.8;
     }
-    h1, h2, h3 {
-      color: cyan;
+    h1, h2 {
+      color: #00ffff;
     }
     .equation {
-      color: gold;
+      color: #ffcc00;
       font-size: 20px;
-      margin: 20px 0;
+      margin: 30px 0;
     }
-    .constants, .code {
-      background-color: #111;
-      padding: 15px;
-      border-radius: 10px;
-      font-family: monospace;
-      white-space: pre-wrap;
-    }
-    .label {
-      color: #00ffff;
-      margin-top: 30px;
-      font-weight: bold;
-      font-size: 20px;
+    .section {
+      margin-top: 40px;
     }
   </style>
 </head>
-<body><h1>Albasatneh Equation for Non-trivial Zeta Zeros</h1>
-<p><strong>Name:</strong> Alaa Sheikh Albasatneh</p>
-<p><strong>Nationality:</strong> Syrian</p>
-<p><strong>Date:</strong> July 10, 2025</p><h2 class="label">Official Equation:</h2>
-<p class="equation">
-  t<sub>k</sub> = (2&theta;k + C<sub>0</sub> + &sum;<sub>n=0</sub><sup>8</sup> &beta;<sub>n</sub> (ln k / ln ln k)<sup>n</sup>) / f
-</p><h2 class="label">Fixed Constants:</h2>
-<div class="constants">
-  f = 1<br>
-  C<sub>0</sub> = -6.180555<br>
-  c (sinusoidal amplitude) = 0.844327<br>
-  &beta;<sub>n</sub> coefficients up to degree 8:<br>
-  [ 0.774963, -0.225223, 0.053304, -0.010113,<br>
-    0.001562, -0.000200, 0.000020, -0.000002, 0.0000001 ]
-</div><h2 class="label">Spectral Zero Generator Algorithm:</h2>
-<div class="code">
-import mathdef albasatneh_root(k): f = 1.0 C0 = -6.180555 beta = [ 0.774963, -0.225223, 0.053304, -0.010113, 0.001562, -0.000200, 0.000020, -0.000002, 0.0000001 ] theta = 1.0  # 2θ already embedded
+<body>
 
-ln_k = math.log(k)
-lnln_k = math.log(ln_k)
-x = ln_k / lnln_k
+  <h1>معادلة Albasatneh لاستخراج الجذور غير البديهية لدالة زيتا</h1>
 
-R = sum(beta[n] * x**n for n in range(9))
-tk = (2 * theta * k + C0 + R) / f
-return tk
+  <div class="section">
+    <p><strong>الاسم:</strong> Alaa Sheikh Albasatneh</p>
+    <p><strong>الجنسية:</strong> سوري</p>
+    <p><strong>التاريخ:</strong> 10 يوليو 2025</p>
+  </div>
 
-</div></body>
+  <div class="section">
+    <h2>المعادلة الرسمية:</h2>
+    <div class="equation">
+      \[
+      t_k = \frac{2\theta k + C_0 + \sum_{n=0}^{8} \beta_n \left( \frac{\ln k}{\ln \ln k} \right)^n}{f}
+      \]
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>الثوابت المعتمدة:</h2>
+    <ul>
+      <li>\( f = 1 \)</li>
+      <li>\( C_0 = -6.180555 \)</li>
+      <li>\( c = 0.844327 \) (سعة الجيبية)</li>
+      <li>كثيرة الحدود التصحيحية \( \beta_n \) حتى الدرجة 8:</li>
+      <ul>
+        <li>\( \beta_0 = 0.774963 \)</li>
+        <li>\( \beta_1 = -0.225223 \)</li>
+        <li>\( \beta_2 = 0.053304 \)</li>
+        <li>\( \beta_3 = -0.010113 \)</li>
+        <li>\( \beta_4 = 0.001562 \)</li>
+        <li>\( \beta_5 = -0.000200 \)</li>
+        <li>\( \beta_6 = 0.000020 \)</li>
+        <li>\( \beta_7 = -0.000002 \)</li>
+        <li>\( \beta_8 = 0.0000001 \)</li>
+      </ul>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>شرح المعادلة:</h2>
+    <p>
+      هذه المعادلة تقدم حلاً مباشرًا لاستخراج الجذر غير البديهي رقم \( k \) لدالة زيتا في المستوى المركب.
+    </p>
+    <p>
+      تمثل \( \theta \) الزاوية الطيفية الموحدة، وتدخل \( k \) ضمن بنية الجذر من خلال معامل زاوي \( 2\theta k \).
+    </p>
+    <p>
+      الحد \( C_0 \) هو إزاحة ثابتة تضمن التمركز الصحيح للأصفار في الحقل الطيفي.
+    </p>
+    <p>
+      كثيرة الحدود \( \beta_n \left( \frac{\ln k}{\ln \ln k} \right)^n \) تمثل التصحيح الديناميكي اللازم لتعديل الدقة مع تزايد \( k \).
+    </p>
+    <p>
+      كل هذه العناصر مقسومة على التردد الطيفي الموحد \( f = 1 \) لضمان ثبات النطاق.
+    </p>
+  </div>
+
+</body>
 </html>
+
+
+import math
+
+def albasatneh_root(k):
+    # الثوابت المعتمدة
+    f = 1.0
+    C0 = -6.180555
+    beta = [
+        0.774963, -0.225223, 0.053304, -0.010113,
+        0.001562, -0.000200, 0.000020, -0.000002, 0.0000001
+    ]
+    theta = 1.0  # لأن 2θ مضمّنة مباشرة في المعادلة
+
+    # الحسابات
+    ln_k = math.log(k)
+    lnln_k = math.log(ln_k)
+    x = ln_k / lnln_k
+    R = sum(beta[n] * x**n for n in range(9))
+
+    # استخراج الجذر
+    tk = (2 * theta * k + C0 + R) / f
+    return tk
