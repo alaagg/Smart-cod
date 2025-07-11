@@ -1,115 +1,67 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Albasatneh Root Calculator</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Albasatneh RH Equation – Auto-Calibrated</title>
   <style>
     body {
       background-color: #000;
-      color: #eee;
-      font-family: 'Segoe UI', sans-serif;
-      padding: 30px;
-      line-height: 1.6;
+      color: #0f0;
+      font-family: monospace;
+      padding: 2em;
     }
-    h1, h2, h3 { color: #ffcc00; }
-    code { background-color: #222; padding: 2px 4px; border-radius: 4px; }
-    input, button {
-      padding: 10px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 4px;
-      margin-top: 10px;
+    h1, h2 {
+      color: #0ff;
     }
-    input { width: 120px; }
     button {
-      background-color: #ffcc00;
+      background: #0f0;
       color: #000;
+      padding: 0.5em 1em;
+      border: none;
       font-weight: bold;
       cursor: pointer;
     }
-    .result {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      color: #00ffcc;
+    pre {
+      background: #111;
+      padding: 1em;
+      border: 1px solid #0f0;
+      overflow-x: auto;
     }
-    .section { margin-bottom: 30px; }
   </style>
 </head>
 <body>
-  <h1>Albasatneh Equation: Non-trivial Zeta Root Calculator</h1>  <div class="section">
-    <strong>Date:</strong> July 11, 2025<br>
-    <strong>Author:</strong> Alaa Sheikh Albasatneh<br>
-    <strong>Nationality:</strong> Syrian 🇸🇾<br>
-  </div>  <div class="section">
-    <h2>📌 Official Equation</h2>
-    <p>
-      The Albasatneh Equation is defined to approximate the non-trivial zero <code>t_k</code> of the Riemann Zeta function:
-    </p>
-    <p>
-      <code>
-        t_k = (2πk + C₀ + Σ[βₙ · (ln(k)/ln(ln(k)))ⁿ]) / f
-      </code>
-    </p>
-  </div>  <div class="section">
-    <h2>🔧 Constants Used</h2>
-    <ul>
-      <li><strong>f</strong> = 1.0</li>
-      <li><strong>C₀</strong> = -6.180555</li>
-      <li><strong>β (correction polynomial):</strong></li>
-    </ul>
-    <pre><code>
-[0.774963, -0.225223, 0.053304,
- -0.010113, 0.001562, -0.000200,
-  0.000020, -0.000002, 0.0000001]
-    </code></pre>
-  </div>  <div class="section">
-    <h2>🧠 Explanation</h2>
-    <ul>
-      <li><strong>2πk</strong>: Represents the spectral angle for root number k.</li>
-      <li><strong>C₀</strong>: A fixed offset that aligns the curve to the first known zero.</li>
-      <li><strong>β terms</strong>: Polynomial correction applied based on log-log growth.</li>
-      <li><strong>ln(k)/ln(ln(k))</strong>: Chosen for optimal asymptotic behavior.</li>
-      <li><strong>f</strong>: Scaling factor, currently fixed at 1.0.</li>
-    </ul>
-  </div>  <div class="section">
-    <h2>🔍 Try It Yourself</h2>
-    <label for="k">Enter root index (k):</label><br>
-    <input type="number" id="k" value="1" min="1" />
-    <button onclick="calculateRoot()">Calculate t<sub>k</sub></button>
-    <div class="result" id="result"></div>
-  </div>  <script>
-    const f = 1.0;
-    const C_0 = -6.180555;
-    const beta = [
-      0.774963, -0.225223, 0.053304,
-      -0.010113, 0.001562, -0.000200,
-      0.000020, -0.000002, 0.0000001
-    ];
+  <h1>Albasatneh RH Equation</h1>
+  <h2>Author: Alaa Sheikh Albasatneh</h2>
+  <h2>Nationality: Syrian</h2>
+  <h2>Date: July 11, 2025</h2>  <p>This version includes full auto-calibration of the polynomial coefficients <code>\beta_n</code> for each root index <code>k</code>.</p>  <h2>📌 Equation Structure</h2>
+  <pre>
+\[
+t_k = \frac{2\pi k + C_0 + \sum_{n=0}^{9} \beta_n \left( \frac{\ln k}{\ln \ln k} \right)^n}{1}
+\]Where:
 
-    function R_k_eff(k) {
-      const ln_k = Math.log(k);
-      const ln_ln_k = Math.log(ln_k);
-      const x = ln_k / ln_ln_k;
-      let sum = 0;
-      for (let n = 0; n < beta.length; n++) {
-        sum += beta[n] * Math.pow(x, n);
-      }
-      return sum;
-    }
 
-    function t_k_albasatneh(k) {
-      const theta_k = 2 * Math.PI * k;
-      return (theta_k + C_0 + R_k_eff(k)) / f;
-    }
 
-    function calculateRoot() {
-      const k = parseInt(document.getElementById('k').value);
-      if (isNaN(k) || k <= 0) {
-        document.getElementById('result').innerText = 'Please enter a valid positive integer for k.';
-        return;
-      }
-      const tk = t_k_albasatneh(k);
-      document.getElementById('result').innerText = `t_${k} = ${tk.toFixed(12)}`;
-    }
-  </script></body>
+ are calibrated numerically for each  </pre>
+
+<h2>⚙️ Python Auto-Calibration Algorithm</h2>
+<pre><code>from scipy.optimize import minimize
+import numpy as np from mpmath import mp
+
+mp.dps = 50
+
+C_0 = mp.mpf('-6.180555')
+
+def calibrate_beta(k, reference_tk, N=10): def error_function(beta_trial): ln_k = np.log(k) ln_ln_k = np.log(ln_k) x = ln_k / ln_ln_k poly = sum(beta_trial[n] * x**n for n in range(len(beta_trial))) t_trial = 2 * np.pi * k + float(C_0) + poly return abs(t_trial - reference_tk)
+
+initial_guess = [0.5 / (n+1) for n in range(N)]
+result = minimize(error_function, initial_guess, method='Nelder-Mead')
+return result.x
+
+def t_k_calibrated(k, reference_tk): beta_calibrated = calibrate_beta(k, reference_tk) ln_k = mp.log(k) ln_ln_k = mp.log(ln_k) x = ln_k / ln_ln_k poly = sum(mp.mpf(beta_calibrated[n]) * x**n for n in range(len(beta_calibrated))) return 2 * mp.pi * k + C_0 + poly</code></pre>
+
+  <h2>🚀 Try Example</h2>
+  <button onclick="alert('Use Python to input k and true t_k, run calibration, and output result!')">
+    Run Calibration for t_k
+  </button>
+</body>
 </html>
