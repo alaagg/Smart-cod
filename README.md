@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Albasatneh Root Calculator</title>
@@ -9,9 +10,15 @@
   </style>
 </head>
 <body>
-  <h1>Albasatneh Equation: Non-trivial Zeta Root Calculator</h1><label for="k">Enter root index (k):</label> <input type="number" id="k" value="1" min="1" /> <button onclick="calculateRoot()">Calculate t<sub>k</sub></button>
+  <h1>Albasatneh Equation: Non-trivial Zeta Root Calculator</h1>
 
-  <div class="result" id="result"></div>  <script>
+  <label for="k">Enter root index (k):</label>
+  <input type="number" id="k" value="1" min="1" />
+  <button onclick="calculateRoot()">Calculate t<sub>k</sub></button>
+
+  <div class="result" id="result"></div>
+
+  <script>
     const f = 1.0;
     const C_0 = -6.180555;
     const beta = [
@@ -45,5 +52,6 @@
       const tk = t_k_albasatneh(k);
       document.getElementById('result').innerText = `t_${k} = ${tk.toFixed(12)}`;
     }
-  </script></body>
+  </script>
+</body>
 </html>
