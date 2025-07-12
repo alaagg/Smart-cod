@@ -1,56 +1,45 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Albasatneh RH Resonance Formula</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     body {
-      margin: 0;
       background-color: #111;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
+      color: #0ff;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 20px;
     }
-    .title {
-      font-size: 2rem;
-      font-weight: bold;
+    h1 {
+      color: #0ff;
       text-align: center;
-      color: #00ffc3;
-      margin-bottom: 1rem;
     }
     .author {
-      font-size: 1rem;
-      margin-bottom: 2rem;
+      text-align: center;
       color: #aaa;
+      margin-bottom: 30px;
     }
-    .equation {
-      font-family: 'Courier New', monospace;
-      font-size: 1.1rem;
+    .formula {
       background-color: #222;
-      padding: 1.5rem;
-      border-left: 4px solid #00ffc3;
-      margin-bottom: 1.5rem;
-      max-width: 800px;
-    }
-    .highlight {
-      color: #00ffc3;
+      padding: 15px;
+      border-left: 5px solid #0ff;
+      margin-bottom: 20px;
+      font-size: 1.2em;
     }
   </style>
 </head>
-<body>
-  <div class="title">Albasatneh RH Resonance Formula</div>
-  <div class="author">By: Alaa Sheikh Albasatneh (Syria) – July 2025</div>  <div class="equation">
-    <div><span class="highlight">t<sub>k</sub></span> = s<sub>0</sub><sup>imag</sup> + a<sub>k</sub> &times; sin(&theta;<sub>k</sub>)</div>
-    <br />
-    <div><span class="highlight">a<sub>k</sub></span> = (t<sub>k</sub> - C<sub>0</sub>) / sin(&theta;<sub>k</sub>)</div>
-    <br />
-    <div><span class="highlight">&theta;<sub>k</sub></span> = (t<sub>0</sub> - C<sub>0</sub>) / (2&pi;k)</div>
-    <br />
-    <div><span class="highlight">t<sub>0</sub></span> = 2&pi;k + C<sub>0</sub> + &sum;&beta;<sub>n</sub>x<sup>n</sup></div>
+<body>  <h1>Albasatneh RH Resonance Formula</h1>
+  <div class="author">By: Alaa Sheikh Albasatneh (Syria) – July 2025</div>  <div class="formula">
+    t_k = s_0^{\text{imag}} + a_k \cdot \sin(\theta_k)
+  </div>  <div class="formula">
+    a_k = \frac{t_k - C_0}{\sin(\theta_k)}
+  </div>  <div class="formula">
+    \theta_k = \frac{t_0 - C_0}{2\pi k}
+  </div>  <div class="formula">
+    t_0 = 2\pi k + C_0 + \sum_{n=0}^{N} \beta_n x^n \quad \text{where} \quad x = \frac{\ln k}{\ln(\ln k)}
+  </div>  <div class="formula">
+    C_0 = -6.180555 \quad , \quad s_0^{\text{imag}} = \text{fixed imaginary center}
   </div></body>
 </html>
