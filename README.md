@@ -1,45 +1,39 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Albasatneh RH Resonance Formula</title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <style>
-    body {
-      background-color: #111;
-      color: #0ff;
-      font-family: 'Courier New', Courier, monospace;
-      padding: 20px;
-    }
-    h1 {
-      color: #0ff;
-      text-align: center;
-    }
-    .author {
-      text-align: center;
-      color: #aaa;
-      margin-bottom: 30px;
-    }
-    .formula {
-      background-color: #222;
-      padding: 15px;
-      border-left: 5px solid #0ff;
-      margin-bottom: 20px;
-      font-size: 1.2em;
-    }
-  </style>
-</head>
-<body>  <h1>Albasatneh RH Resonance Formula</h1>
-  <div class="author">By: Alaa Sheikh Albasatneh (Syria) – July 2025</div>  <div class="formula">
-    t_k = s_0^{\text{imag}} + a_k \cdot \sin(\theta_k)
-  </div>  <div class="formula">
-    a_k = \frac{t_k - C_0}{\sin(\theta_k)}
-  </div>  <div class="formula">
-    \theta_k = \frac{t_0 - C_0}{2\pi k}
-  </div>  <div class="formula">
-    t_0 = 2\pi k + C_0 + \sum_{n=0}^{N} \beta_n x^n \quad \text{where} \quad x = \frac{\ln k}{\ln(\ln k)}
-  </div>  <div class="formula">
-    C_0 = -6.180555 \quad , \quad s_0^{\text{imag}} = \text{fixed imaginary center}
-  </div></body>
-</html>
+--------------------------------------------------------
+Alaa's Critical Phase Equation (full form)
+--------------------------------------------------------
+(1) Implicit phase condition
+    f * t_k(A)
+  + c * sin(b * t_k(A))
+  - 2*pi*k
+  + a * ln A
+  + d * ln(A + 1)
+  - arcsin(1 / A)
+  - R_k
+  = 0
+
+(2) Core zero on the critical line
+    s_core_k(A) = 1/2 + i * t_k(A)
+
+(3) Spatial–spectral correction
+    delta_s_k(r,theta,A)
+      = (x_k(r,theta,A) - 1/2)
+      + i * (y_k(r,theta,A) - t_k(A))
+
+(4) Final spectral point
+    s_k(A,r,theta) = s_core_k(A) + delta_s_k(r,theta,A)
+
+Constants:
+    a = 0.525058
+    b = 0.100077
+    c = 0.100077
+    d = 0.065027
+    f = 1.200232
+
+Variables:
+    A     : element of the set A
+    k     : 1,2,3,...
+    t_k   : solution of (1)
+    R_k   : resonance key (optional)
+    r,θ   : polar coordinates in the spectral fabric
+    x_k,y_k : spatial correction functions
+--------------------------------------------------------
