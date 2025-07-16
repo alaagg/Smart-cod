@@ -1,30 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Spectral Evolution Mining</title>
+  <title>Spectral Genetic Mining</title>
   <style>
     body {
-      background: #101010;
+      background-color: #000;
       color: #00ff99;
       font-family: monospace;
       padding: 20px;
     }
-    input, button, textarea {
+    input, button {
       width: 100%;
       padding: 10px;
       margin: 5px 0;
-      background: #1a1a1a;
+      background: #111;
       color: #00ff99;
       border: none;
       border-radius: 5px;
     }
     button {
-      background-color: #00aa00;
       cursor: pointer;
+    }
+    #startBtn {
+      background-color: #00aa00;
     }
     #stopBtn {
       background-color: #aa0000;
+    }
+    #exportBtn {
+      background-color: #0044ff;
     }
     .output {
       background: #111;
@@ -36,82 +40,86 @@
   </style>
 </head>
 <body>
-  <h1>Spectral Genetic Mining</h1>
+  <h1>Spectral Genetic Mining</h1><label>Batch Size:</label> <input type="number" id="batchSize" value="2000000" />
 
-  <form id="miningForm">
-    <label>Version (Hex, 4 bytes):</label>
-    <input type="text" id="version" placeholder="e.g., 20000000" required />
+<button id="startBtn">Start Mining</button> <button id="stopBtn">Stop Mining</button> <button id="exportBtn">Export Results</button>
 
-    <label>Previous Block Hash (64 hex chars):</label>
-    <input type="text" id="prevHash" placeholder="e.g., 000000...abc" required />
-
-    <label>Merkle Root (64 hex chars):</label>
-    <input type="text" id="merkleRoot" placeholder="e.g., 849b62...579f1" required />
-
-    <label>Timestamp (Hex, 4 bytes):</label>
-    <input type="text" id="timestamp" placeholder="e.g., 5f5b5c50" required />
-
-    <label>Bits (Difficulty target, 4 bytes):</label>
-    <input type="text" id="bits" placeholder="e.g., 17148edf" required />
-
-    <label>Sensitivity (e.g., 0.001):</label>
-    <input type="number" step="0.0001" id="sensitivity" value="0.001" required />
-
-    <label>Generation Size:</label>
-    <input type="number" id="generationSize" value="100000" required />
-
-    <label>Elite Percentage (e.g., 0.001):</label>
-    <input type="number" step="0.0001" id="elitePercent" value="0.001" required />
-
-    <label>Block Template URL or JSON (optional):</label>
-    <textarea id="blockSource" placeholder="Paste block template URL or JSON here..." rows="4"></textarea>
-
-    <button type="submit" id="startBtn">Start Mining</button>
-    <button type="button" id="stopBtn">Stop Mining</button>
-  </form>
-
-  <div class="output" id="output"></div>
+  <div class="output">
+    <div id="status">⛏️ Mining not started.</div>
+    <div>⏱️ Runtime: <span id="runtime">00:00</span></div>
+    <div>📊 Hash Count: <span id="hashCount">0</span></div>
+    <div>✅ Successes: <span id="successes">0</span></div>
+    <div>🎯 Best Proximity: <span id="proximity">0%</span></div>
+    <div>🏆 Golden Nonce: <span id="goldenNonce">--</span></div>
+  </div><canvas id="chart" width="300" height="100" style="margin-top:10px;"></canvas>
 
   <script>
     let mining = false;
+    let hashCount = 0;
+    let successes = 0;
+    let bestProximity = 0;
+    let goldenNonce = "--";
+    let timer;
+    let intervalId;
 
-    document.getElementById('miningForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      if (mining) return;
+    async function fetchStatus() {
+      const res = await fetch('/status');
+      const data = await res.json();
+      document.getElementById("hashCount").innerText = data.hashCount;
+      document.getElementById("successes").innerText = data.successes;
+      document.getElementById("proximity").innerText = data.bestProximity + "%";
+      document.getElementById("goldenNonce").innerText = data.goldenNonce;
+    }
+
+    document.getElementById("startBtn").onclick = async () => {
       mining = true;
-
-      const version = document.getElementById('version').value;
-      const prevHash = document.getElementById('prevHash').value;
-      const merkleRoot = document.getElementById('merkleRoot').value;
-      const timestamp = document.getElementById('timestamp').value;
-      const bits = document.getElementById('bits').value;
-      const sensitivity = parseFloat(document.getElementById('sensitivity').value);
-      const generationSize = parseInt(document.getElementById('generationSize').value);
-      const elitePercent = parseFloat(document.getElementById('elitePercent').value);
-      const blockSource = document.getElementById('blockSource').value;
-
-      document.getElementById('output').textContent = "⛏️ Mining started...";
-
-      const response = await fetch('/start', {
+      document.getElementById("status").innerText = "⛏️ Mining started...";
+      startTimer();
+      const batchSize = parseInt(document.getElementById("batchSize").value);
+      await fetch('/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          version, prevHash, merkleRoot, timestamp, bits,
-          sensitivity, generationSize, elitePercent, blockSource
-        })
+        body: JSON.stringify({ batchSize })
       });
+      intervalId = setInterval(fetchStatus, 2000);
+    };
 
-      const data = await response.json();
-      document.getElementById('output').textContent = data.message;
+    document.getElementById("stopBtn").onclick = async () => {
       mining = false;
-    });
-
-    document.getElementById('stopBtn').addEventListener('click', async function () {
-      if (!mining) return;
+      document.getElementById("status").innerText += "\n⛔ Mining stopped.";
+      stopTimer();
+      clearInterval(intervalId);
       await fetch('/stop', { method: 'POST' });
-      mining = false;
-      document.getElementById('output').textContent += "\n⛔ Mining stopped.";
-    });
-  </script>
-</body>
+    };
+
+    document.getElementById("exportBtn").onclick = () => {
+      const result = {
+        hashCount,
+        successes,
+        bestProximity,
+        goldenNonce
+      };
+      const blob = new Blob([JSON.stringify(result, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "mining_results.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+
+    function startTimer() {
+      let sec = 0;
+      timer = setInterval(() => {
+        sec++;
+        const min = Math.floor(sec / 60).toString().padStart(2, '0');
+        const s = (sec % 60).toString().padStart(2, '0');
+        document.getElementById("runtime").innerText = `${min}:${s}`;
+      }, 1000);
+    }
+
+    function stopTimer() {
+      clearInterval(timer);
+    }
+  </script></body>
 </html>
