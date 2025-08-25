@@ -1,0 +1,71 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+# Reproducibility
+rng = np.random.default_rng(123)
+
+# ---- Simulation settings ----
+T, N = 100, 512
+t = np.linspace(0, T, N)
+noise_level = 0.30          # environment noise
+width = 15.0                # observer pulse width
+phase_gap = np.pi / 4       # mismatch phase (harder case)
+normalize_curves = True     # visualize on the same 0..1 scale
+
+# ---- System / Environment / Observer (psi, phi, gamma) ----
+def psi_sys(t, phase=0.0):
+    """System wavefunction (toy model)."""
+    # slow chirp-like phase evolution
+    return np.exp(1j * (0.12 * t + phase))
+
+def phi_env(t, noise_level=0.3):
+    """Environment noise as complex Gaussian."""
+    noise = noise_level * (rng.standard_normal(len(t)) + 1j * rng.standard_normal(len(t)))
+    return 1.0 + noise
+
+def gamma_obs(t, phase=0.0, width=15.0):
+    """Observer filter (Gaussian envelope + constant phase)."""
+    env = np.exp(-0.5 * ((t - T/2) / width) ** 2)
+    return env * np.exp(1j * phase)
+
+# ---- Build signals ----
+psi = psi_sys(t, phase=0.0)
+phi = phi_env(t, noise_level=noise_level)
+
+gamma_match    = gamma_obs(t, phase=0.0,       width=width)        # matched
+gamma_mismatch = gamma_obs(t, phase=phase_gap, width=width)        # mismatched
+
+# ---- Your equation directly: P(x,t) = |psi * phi * gamma|^2 ----
+P_match    = np.abs(psi * phi * gamma_match) ** 2
+P_mismatch = np.abs(psi * phi * gamma_mismatch) ** 2
+
+# Optional normalization for clearer comparison
+if normalize_curves:
+    P_match    = P_match / (P_match.max() + 1e-12)
+    P_mismatch = P_mismatch / (P_mismatch.max() + 1e-12)
+
+# ---- Plot (legend outside; nothing covers the lines) ----
+fig = plt.figure(figsize=(9, 5.5), constrained_layout=True)
+ax = fig.add_subplot(111)
+
+ax.plot(t, P_match,    linewidth=2, label="Matched filter (phase = 0)")
+ax.plot(t, P_mismatch, linewidth=2, linestyle="--", label="Mismatched filter (phase = π/4)")
+
+ax.set_xlabel("Time t")
+ax.set_ylabel("P(x, t)" + (" (normalized)" if normalize_curves else ""))
+ax.set_title("Effect of Observer Matching on  P(x, t) = |ψ · φ · γ|²")
+ax.grid(True, alpha=0.3)
+ax.set_ylim(bottom=0)
+ax.margins(x=0.02, y=0.05)
+
+# Legend outside on the right so it never covers the plot
+leg = ax.legend(loc="upper left", bbox_to_anchor=(1.02, 1.0), borderaxespad=0.0,
+                frameon=True, framealpha=0.95)
+
+# Save & show
+out_path = "P_compare.png"
+plt.tight_layout()   # extra safety
+plt.savefig(out_path, dpi=200, bbox_inches="tight")
+print("Saved figure:", os.path.abspath(out_path))
+plt.show()
