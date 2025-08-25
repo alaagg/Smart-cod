@@ -338,3 +338,17 @@ alaasilverman@gmail.com
 # Commercial, academic, and research use require a paid license.
 # Contact: alaasilverman@gmail.com
 
+# إنشاء ملف LICENSE في الجذر
+echo "PROPRIETARY LICENSE - © 2025 Alaa Sheikh Albasatneh" > LICENSE
+
+# في أعلى الملف الرئيسي
+"""
+PROPRIETARY SOFTWARE - © 2025 Alaa Sheikh Albasatneh
+All rights reserved. Unauthorized use prohibited.
+Contact: alaasilverman@gmail.com for licensing.
+"""
+
+# معلومات إضافية في الكود
+__version__ = "1.0.0"
+__created__ = "2025-01-01"
+__status__ = "Proprietary"
